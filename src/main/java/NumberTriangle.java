@@ -98,6 +98,7 @@ public class NumberTriangle {
             return this.right.retrieve(path.substring(1));
         } else {
             throw new IllegalArgumentException("Illegal path");
+        }
     }
 
     /** Read in the NumberTriangle structure from a file.
