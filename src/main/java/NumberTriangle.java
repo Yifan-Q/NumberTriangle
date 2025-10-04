@@ -1,4 +1,7 @@
 import java.io.*;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is the provided NumberTriangle class to be used in this coding task.
@@ -118,8 +121,7 @@ public class NumberTriangle {
         InputStream inputStream = NumberTriangle.class.getClassLoader().getResourceAsStream(fname);
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 
-
-        // TODO define any variables that you want to use to store things
+        List<NumberTriangle> last_row = new ArrayList<>();
 
         // will need to return the top of the NumberTriangle,
         // so might want a variable for that.
@@ -128,10 +130,25 @@ public class NumberTriangle {
         String line = br.readLine();
         while (line != null) {
 
-            // remove when done; this line is included so running starter code prints the contents of the file
-            System.out.println(line);
-
-            // TODO process the line
+            String[] split_line = line.split(" ");
+            if (split_line.length == 1){
+                top = new NumberTriangle(Integer.parseInt(split_line[0]));
+                last_row.add(top);
+            } else {
+                List<NumberTriangle> temp = new ArrayList<>();
+                for (int i = 0; i < split_line.length; i++){
+                    NumberTriangle nt = new NumberTriangle(Integer.parseInt(split_line[i]));
+                    for (int j = 0; j < last_row.size(); j++){
+                        if (i == j){
+                            last_row.get(j).left = nt;
+                        } else if (i == j+1){
+                            last_row.get(j).right = nt;
+                        }
+                    }
+                    temp.add(nt);
+                }
+                last_row = temp;
+            }
 
             //read the next line
             line = br.readLine();
